@@ -1,0 +1,95 @@
+﻿<Page
+      x:Class="SensorCoffee.Views.ResultPage" 
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:SensorCoffee.Views" 
+      xmlns:data="clr-namespace:SensorCoffee.DataModel" 
+      xmlns:Converter="clr-namespace:SensorCoffee.Converter" 
+      mc:Ignorable="d" 
+      d:DesignHeight="854" d:DesignWidth="480" Background="#FFE5DBD0" 
+      d:DataContext="{d:DesignInstance IsDesignTimeCreatable=True, Type=data:MainSampleData}">
+
+    <Page.Resources>
+        <Converter:SentimentConverter x:Key="SentimentConverter"/>
+        <Converter:GenderConverter x:Key="GenderConverter"/>
+        <Converter:FaceConverter x:Key="FaceConverter"/>
+        <Converter:ScoreConverter x:Key="ScoreConverter"/>
+        <Converter:ScoreTextConverter x:Key="ScoreTextConverter"/>
+        <Converter:ScoreTextKanaConverter x:Key="ScoreTextKanaConverter"/>
+    </Page.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="80" />
+            <RowDefinition />
+            <RowDefinition Height="80" />
+        </Grid.RowDefinitions>
+        <Label Grid.Row="0" Background="#736357"/>
+
+        <Grid Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="3*" />
+                <RowDefinition Height="1*" />
+                <RowDefinition Height="2*" />
+                <RowDefinition Height="4*" />
+            </Grid.RowDefinitions>
+
+            <Image Grid.RowSpan="4" Source="{Binding TempImageElement}" Stretch="UniformToFill" HorizontalAlignment="Center" />
+
+            <Image Grid.Row="1" Source="/SensorCoffee;component/Assets/Result.png" Width="150" Opacity="0.8" Margin="166,0,164,0.333" />
+            <Rectangle Grid.Row="3" Fill="White" RadiusX="15" RadiusY="15" Margin="20,0,20,20" Opacity="0.8" />
+            <Grid Grid.Row="3" Margin="5,0,5,5" >
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="1*" />
+                </Grid.ColumnDefinitions>
+                <Grid Grid.Column="0" Margin="0,50,0,50">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="1*" />
+                        <RowDefinition Height="1*" />
+                        <RowDefinition Height="1*" />
+                        <RowDefinition Height="1*" />
+                    </Grid.RowDefinitions>
+                    <StackPanel Grid.Row="0">
+                        <TextBlock Grid.Row="0" HorizontalAlignment="Center" Text="SENTIMENT" FontSize="18" Foreground="#FF00B26C" />
+                        <Image Grid.Row="0" Source="/SensorCoffee;component/Assets/Dotline.png" Margin="0,-5,0,0" Width="130" />
+                    </StackPanel>
+                    <StackPanel Grid.Row="1" Grid.RowSpan="2"/>
+                    <TextBlock Grid.Row="1" HorizontalAlignment="Center" Text="{Binding Result.Sentiment, Converter={StaticResource SentimentConverter}}" FontSize="18" Foreground="#FF00B26C" />
+                    <TextBlock Grid.Row="2" HorizontalAlignment="Center" Text="{Binding Result.SScore, Converter={StaticResource ScoreConverter}}" FontSize="18" Foreground="#FF00B26C" />
+                </Grid>
+                <StackPanel Grid.Column="1">
+                    <Image Source="{Binding Result.FaceIcon}" Margin="0,20,0,0" Width="150" Height="150" />
+                    <TextBlock Grid.Row="0" HorizontalAlignment="Center" Text="{Binding Result.Score, Converter={StaticResource ScoreTextConverter}}" Margin="0,0,0,0" FontSize="18" Foreground="#FF00B26C" TextWrapping="Wrap" />
+                    <TextBlock Grid.Row="0" HorizontalAlignment="Center" Text="{Binding Result.Score, Converter={StaticResource ScoreTextKanaConverter}}" Margin="0,0,0,0" FontSize="18" Foreground="#FF00B26C" />
+                </StackPanel>
+                <Grid Grid.Column="2" Margin="0,50,0,50">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="1*" />
+                        <RowDefinition Height="1*" />
+                        <RowDefinition Height="1*" />
+                        <RowDefinition Height="1*" />
+                    </Grid.RowDefinitions>
+                    <StackPanel Grid.Row="0">
+                        <TextBlock Grid.Row="0" HorizontalAlignment="Center" Text="EXPRESSION" FontSize="18" Foreground="#FF00B26C" />
+                        <Image Grid.Row="0" Source="/SensorCoffee;component/Assets/Dotline.png" Margin="0,-5,0,0" Width="130" />
+                    </StackPanel>
+                    <StackPanel Grid.Row="1" Grid.RowSpan="2"/>
+                    <TextBlock Grid.Row="1" HorizontalAlignment="Center" Text="{Binding Result.Face, Converter={StaticResource FaceConverter}}" FontSize="18" Foreground="#FF00B26C" />
+                    <TextBlock Grid.Row="2" HorizontalAlignment="Center" Text="{Binding Result.Score, Converter={StaticResource ScoreConverter}}" FontSize="18" Foreground="#FF00B26C" />
+
+                    <Button Grid.Row="3" HorizontalAlignment="Center" Width="100" FontSize="15" 
+                        Background="#736357" Foreground="#FFE5DBD0" Click="Recommend_Click">
+                        <StackPanel>
+                            <TextBlock HorizontalAlignment="Center" Text="RECOMMEND" />
+                            <TextBlock HorizontalAlignment="Center" Text="COFFEE" />
+                        </StackPanel>
+                    </Button>
+                </Grid>
+            </Grid>
+        </Grid>
+        <Label Grid.Row="2" Background="#736357"/>
+    </Grid>
+</Page>
